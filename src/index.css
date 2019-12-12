@@ -1,0 +1,27 @@
+.btn {
+    border-radius: 9999px;
+    padding: 0.25rem .5rem;
+    cursor: pointer;
+}
+
+.btn.btn-black {
+    color: #2d3748;
+    border: 1px solid #2d3748;
+}
+
+.btn.btn-blue {
+    color: #3182ce;
+    border: 1px solid #3182ce;
+}
+
+.btn.btn-red {
+    color: #a33a37;
+    border: 1px solid #a33a37;
+}
+
+input, select, textarea {
+    padding: .25rem .35rem;
+    border-radius: .25rem;
+    border: 1px solid #e2e8f0;
+    background-color: transparent;
+}
