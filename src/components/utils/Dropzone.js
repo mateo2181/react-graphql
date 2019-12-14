@@ -15,8 +15,8 @@ const Container = {
     borderRadius: '2px',
     borderColor: '#eeeeee',
     borderStyle: 'dashed',
-    backgroundColor: '#fafafa',
-    color: '#bdbdbd',
+    backgroundColor: '#dad9d9',
+    color: '#424242',
     outline: 'none',
     transition: 'border .24s ease-in-out'
 };

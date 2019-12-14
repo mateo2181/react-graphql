@@ -1,6 +1,6 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { useHistory } from "react-router-dom";
+import { useHistory, NavLink } from 'react-router-dom';
+import { Container, Menu } from 'semantic-ui-react'
 function Header(props) {
 
     let history = useHistory();
@@ -8,24 +8,31 @@ function Header(props) {
     function logout() {
         localStorage.removeItem('user');
         localStorage.removeItem('token');
-        props.dispatch({ type: 'LOGOUT'});
+        props.dispatch({ type: 'LOGOUT' });
         history.replace('/login');
     }
 
     return (
-        <div className="px-2 bg-gray-600 flex w-full justify-between">
-            <div className="flex">
-                <NavLink activeClassName="font-semibold bg-gray-900" className="text-white px-2 py-1" to="/authors"> Authors </NavLink>
-                <NavLink activeClassName="font-semibold bg-gray-900" className="text-white px-2 py-1" to="/books"> Books </NavLink>
-            </div>
-            <div className="flex">
-                {props.store.token ?
-                    <button className="text-white px-2 py-1" onClick={logout}> Logout </button>
-                    :
-                    <NavLink activeClassName="font-semibold bg-gray-900" className="text-white px-2 py-1" to="/login"> Login </NavLink>
-                }
-            </div>
-        </div>
+        <Menu inverted>
+            <Container>
+                <Menu.Item activeClassName="active" as={NavLink} to="/authors" color={'blue'}>
+                    Authors
+                </Menu.Item>
+                <Menu.Item activeClassName="active" as={NavLink} to="/books" color={'blue'}>
+                    Books
+                </Menu.Item>
+
+                <Menu.Menu position='right'>
+                    {props.store.token ?
+                        <Menu.Item> <button onClick={logout}> Logout </button> </Menu.Item>
+                        :
+                        <Menu.Item activeClassName="active" as={NavLink} to="/login" color={'blue'}>
+                            Login
+                        </Menu.Item>
+                    }
+                </Menu.Menu>
+            </Container>
+        </Menu>
     );
 };
 

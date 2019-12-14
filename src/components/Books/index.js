@@ -3,6 +3,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { GET_BOOKS, DELETE_BOOK } from '../../queries/books';
 import Book from './Book';
 import { Link } from "react-router-dom";
+import { Grid, Button, Divider, Container, Icon } from 'semantic-ui-react';
 
 const Books = () => {
 
@@ -13,7 +14,7 @@ const Books = () => {
                 const { books } = cache.readQuery({ query: GET_BOOKS });
                 cache.writeQuery({
                     query: GET_BOOKS,
-                    data: { books: books.filter(b => b.id != deleteBook) },
+                    data: { books: books.filter(b => b.id !== deleteBook) },
                 });
             }
         });
@@ -26,14 +27,21 @@ const Books = () => {
     if (loading) return "Loading";
     if (error) return <React.Fragment>Error :(</React.Fragment>;
     return (
-        <div className="bg-white rounded shadow px-2">
-            <div className="pt-2 flex justify-start">
-                <Link className="btn btn-black" to={`/books/create`} > New Book </Link>
-            </div>
-            {data.books.map(b => (
-                <Book deleteBook={openModalDeleteBook} book={b} key={b.id} />
-            ))}
-        </div>
+        <Container className="bg-white rounded">
+            <Grid padded>
+                <Grid.Column>
+                    <Button size={'small'} className="cursor-pointer" as={Link} icon labelPosition='left' to={`/books/create`} >
+                        <Icon name='plus' />
+                        New Book
+                    </Button>
+                </Grid.Column>
+            </Grid>
+            <Grid>
+                {data.books.map(b => (
+                    <Book deleteBook={openModalDeleteBook} book={b} key={b.id} />
+                ))}
+            </Grid>
+        </Container>
     );
 }
 

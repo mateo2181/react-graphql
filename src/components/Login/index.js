@@ -3,6 +3,7 @@ import { LOGIN_MUTATION } from '../../queries/login';
 import { GET_LOGGED_USER } from '../../queries/loggedUser';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useHistory } from "react-router-dom";
+import { Input, Header, Button } from 'semantic-ui-react';
 
 function Login(props) {
 
@@ -10,12 +11,13 @@ function Login(props) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    // const [errorLogin, setErrorLogin] = useState('');
 
     const { loading, error, data } = useQuery(GET_LOGGED_USER, { errorPolicy: 'all' });
     const [LoginMutation] = useMutation(LOGIN_MUTATION);
 
-    const loginForm = async () => {
-
+    async function loginForm() {
+        // event.preventDefault();
         try {
             props.dispatch({ type: 'AUTH_BEGIN' });
             const user = await LoginMutation({ variables: { email, password } })
@@ -23,9 +25,10 @@ function Login(props) {
             localStorage.setItem('user', user.data.login.user)
             props.dispatch({ type: 'AUTH_SUCCESS', user: user.data.login.user, token: user.data.login.token });
             history.replace('/authors')
+            // return true;
         } catch (e) {
-            console.error(`An error occured: `, e)
-            props.dispatch({ type: 'AUTH_FAILURE', error: e });
+            console.error(`An error occured: `, e.graphQLErrors[0].message)
+            props.dispatch({ type: 'AUTH_FAILURE', error: e.graphQLErrors[0].message });
             //   this.props.history.replace('/login')
         }
     }
@@ -36,12 +39,6 @@ function Login(props) {
 
     if (error) {
         console.log('Error')
-        // return (
-        //     <pre>Bad: {error.networkError.result.errors.map(({ message }, i) => (
-        //         <span key={i}>{message}</span>
-        //     ))}
-        //     </pre>
-        // )
     }
 
     // redirect if user is logged in
@@ -51,20 +48,22 @@ function Login(props) {
     }
 
     return (
-        <div className="bg-white rounded shadow px-2">
-            <div className="pt-2 text-xl w-full border-b"> Login </div>
-            <div className="max-w-xs mx-auto mt-4 w-full flex flex-wrap">
-
+        <div className="bg-white rounded shadow px-2 pb-2">
+            <form onSubmit={loginForm} className="max-w-xs mx-auto mt-4 w-full flex flex-wrap">
+                <Header as="h2" style={{ paddingTop: '20px' }}> Login </Header>
                 <div className="mb-2 w-full">
-                    <input className="w-full" value={email} onChange={e => setEmail(e.target.value)} type="text" placeholder="E-mail" />
+                    <Input className="w-full" autoFocus value={email} onChange={e => setEmail(e.target.value)} type="text" placeholder="E-mail" />
                 </div>
                 <div className="mb-2 w-full">
-                    <input className="w-full" value={password} onChange={e => setPassword(e.target.value)} type="password" placeholder="Password" />
+                    <Input className="w-full" value={password} onChange={e => setPassword(e.target.value)} type="password" placeholder="Password" />
                 </div>
                 <div className="pb-2 w-full">
-                    <button className="btn btn-black" onClick={loginForm}> Login </button>
+                    <Button primary type="submit"> Login </Button>
                 </div>
-            </div>
+                {props.store.authError ?
+                    <div className="text-red-600 text-sm"> {props.store.authError} </div> : ''
+                }
+            </form>
 
 
         </div>

@@ -3,7 +3,8 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import { CREATE_BOOK, GET_BOOKS } from '../../../queries/books';
 import { GET_AUTHORS } from '../../../queries/authors';
 import { useHistory } from "react-router-dom";
-import { Dropzone } from '../Dropzone';
+import { Dropzone } from '../../utils/Dropzone';
+import { Input, TextArea, Form, Button, Grid, Header } from 'semantic-ui-react';
 
 function CreateBook() {
     const [title, setTitle] = useState('');
@@ -35,42 +36,41 @@ function CreateBook() {
     }
 
     const onChangeFile = (file) => {
-        // if (validity.valid) {
-            setImage(file);
-        // }
-
-        // uploadFileMutation({ variables: { file } }).then(() => {
-        //     apolloClient.resetStore()
-        // })
+        setImage(file);
     };
 
     if (loading) return "Loading Authors";
 
     return (
         <div className="bg-white rounded shadow px-2">
-            <div className="pt-2 text-xl w-full border-b"> Create Book </div>
-            <div className="mt-4 flex flex-wrap items-center w-full">
-                <div className="w-full sm:w-2/3 lg:w-3/5">
-                    <div className="mb-2 w-full">
-                        <select onChange={e => setAuthor(e.target.value)} className="w-full">
-                            <option value={null}> Author </option>
-                            {data.authors.map(a => (<option key={a.id} value={a.id}> {a.firstName} {a.lastName} </option>))}
-                        </select>
-                    </div>
-                    <div className="mb-2 w-full">
-                        <input onChange={e => setTitle(e.target.value)} value={title} className="w-full" placeholder="Title" type="text" />
-                    </div>
-                    <div className="mb-2 w-full">
-                        <textarea rows="5" onChange={e => setDescription(e.target.value)} value={description} className="w-full" placeholder="Description"></textarea>
-                    </div>
-                </div>
-                <div className="px-4 w-full sm:w-1/3 lg:w-2/5">
-                    <Dropzone imageEvent={onChangeFile} />
-                    {/* <input type="file" accept='image/*' onChange={onChangeFile} /> */}
-                </div>
-                <div className="pb-2 w-full">
-                    <button className="btn btn-blue" onClick={saveBook}> Save </button>
-                </div>
+            <div className="mt-2">
+                <Form className="w-full">
+                    <Grid columns='equal' verticalAlign='middle' padded style={{ width: '100%' }}>
+                        <Header as="h2" style={{ marginBottom: '2px', paddingTop: '20px' }}> Create Book </Header>
+                        <Grid.Row>
+                            <Grid.Column width={10}>
+                                <div className="mb-2 w-full">
+                                    <select onChange={e => setAuthor(e.target.value)} className="w-full">
+                                        <option value={null}> Author </option>
+                                        {data.authors.map(a => (<option key={a.id} value={a.id}> {a.firstName} {a.lastName} </option>))}
+                                    </select>
+                                </div>
+                                <div className="mb-2 w-full">
+                                    <Input onChange={e => setTitle(e.target.value)} value={title} className="w-full" placeholder="Title" type="text" />
+                                </div>
+                                <div className="mb-2 w-full">
+                                    <TextArea rows="5" onChange={e => setDescription(e.target.value)} value={description} className="w-full" placeholder="Description" />
+                                </div>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <Dropzone imageEvent={onChangeFile} />
+                            </Grid.Column>
+                        </Grid.Row>
+                        <div className="pb-2 w-full">
+                            <Button primary onClick={saveBook}> Save </Button>
+                        </div>
+                    </Grid>
+                </Form>
 
                 {/* <UploadFile /> */}
             </div>

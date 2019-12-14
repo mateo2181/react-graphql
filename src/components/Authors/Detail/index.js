@@ -1,7 +1,8 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_AUTHOR_DETAIL } from '../../../queries/authors';
-import Author from '../Author';
+import { Header, Grid } from 'semantic-ui-react';
+import BookAuthor from '../BookAuthor';
 
 function AuthorDetail(props) {
 
@@ -13,10 +14,21 @@ function AuthorDetail(props) {
 
     if (loading) return "Loading";
     if (error) return <React.Fragment>Error :(</React.Fragment>;
+
+    let { firstName, lastName, books } = data.author;
+
     return (
         <div className="bg-white rounded shadow px-2">
-            {/* <h4 className="px-2 font-semibold text-xl"> Authors </h4> */}
-            <Author author={data.author} />
+            <Header as="h2" style={{ marginBottom: '2px', paddingTop: '20px' }}> {firstName} {lastName} </Header>
+            {books ?
+                <div className="w-full">
+                    <Header as="h3" style={{ marginBottom: '10px', paddingTop: '15px' }}> Books </Header>
+                    <Grid>
+                        {books.map(b => <BookAuthor key={b.id} book={b} />)}
+                    </Grid>
+                </div>
+                : ''
+            }
         </div>
     );
 }

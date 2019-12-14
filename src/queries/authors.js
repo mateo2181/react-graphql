@@ -6,6 +6,12 @@ export const GET_AUTHORS = gql`
         id
         firstName
         lastName
+        description
+        nationality
+        image
+        books {
+          id
+        }
     }
   }
 `;
@@ -16,6 +22,9 @@ query Author($id: ID!) {
         id
         firstName
         lastName
+        description
+        nationality
+        image
         books {
           id
           title
@@ -27,10 +36,13 @@ query Author($id: ID!) {
 `;
 
 export const CREATE_AUTHOR = gql`
-mutation createAuthor($firstName: String!,$lastName: String!) {
-  createAuthor(firstName: $firstName,lastName: $lastName) {   
+mutation createAuthor($firstName: String!,$lastName: String!,$description: String!,$nationality: String!,$file: Upload!) {
+  createAuthor(firstName: $firstName,lastName: $lastName, description: $description,nationality: $nationality,file: $file) {   
     firstName
     lastName
+    description
+    nationality
+    image
   }
 }
 `;

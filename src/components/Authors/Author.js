@@ -1,32 +1,30 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import BookAuthor from './BookAuthor';
+import { Header, Grid, Card, Image, Button } from 'semantic-ui-react';
 
 const Author = ({ author }) => {
-    let { id, firstName, lastName } = author;
-    return (
-        <div className="border-b p-2">
-            <div className="flex flex-wrap items-center justify-between">
-                <div className="text-xl font-semibold"> {firstName} {lastName} </div>
-                {author.books ?
-                    <div className="w-full">
-                        <div className="py-2 font-semibold text-lg"> Books </div>
-                        <div className="w-full flex flex-wrap">
-                            {author.books.map(b => {
-                                return <div key={b.id} className="border-b w-full">
-                                    <BookAuthor key={b.id} book={b} />
-                                </div>
-                            })}
-                        </div>
-                    </div>
-                    :
-                    <div>
-                        <Link className="btn btn-blue" to={`/authors/${id}`}> Books </Link>
-                    </div>
-                }
-            </div>
+    let { id, firstName, lastName, description, nationality, image, books } = author;
 
-        </div>
+    const countBooks = (<div> Books: {books.length} </div>);
+
+    return (
+        <Grid padded>
+            <Grid.Row className="border-b">
+                <Grid.Column mobile={4} tablet={6} computer={6}>
+                    <Image rounded className='h-24 object-cover object-top w-full' src={`${process.env.REACT_APP_URI_API}/${image}`} />
+                </Grid.Column>
+                <Grid.Column verticalAlign='middle' width={10}>
+                    <Card.Content>
+                        <Card.Header className="text-lg"> {`${firstName} ${lastName}`} </Card.Header>
+                        <Card.Meta className="text-gray-500 text-sm"> {nationality} </Card.Meta>
+                        <div className="mt-2">
+                            <Button as={NavLink} size='mini' to={`/authors/${id}`} basic primary> Books </Button>
+                        </div>
+                    </Card.Content>
+                </Grid.Column>
+            </Grid.Row>
+        </Grid>
     )
 };
 
