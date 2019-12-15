@@ -62,7 +62,7 @@ function App() {
           <Grid.Column style={{ maxWidth: 700 }}>
             <Header store={store} dispatch={dispatch} />
             <Switch>
-              <Route store={store} dispatch={dispatch} path="/" exact component={Login} />
+              <Route store={store} dispatch={dispatch} path="/" exact component={() => <Login store={store} dispatch={dispatch} />} />
               <Route path="/login" component={() => <Login store={store} dispatch={dispatch} />} />
               <Route path="/authors" component={AuthorsRoute} />
               <Route exact path="/books/create" component={CreateBook} />
