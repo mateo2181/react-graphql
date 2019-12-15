@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_AUTHOR_DETAIL } from '../../../queries/authors';
-import { Header, Grid } from 'semantic-ui-react';
+import { Header, Grid, Image } from 'semantic-ui-react';
 import BookAuthor from '../BookAuthor';
 
 function AuthorDetail(props) {
@@ -15,11 +15,21 @@ function AuthorDetail(props) {
     if (loading) return "Loading";
     if (error) return <React.Fragment>Error :(</React.Fragment>;
 
-    let { firstName, lastName, books } = data.author;
+    let { firstName, lastName, description, image, books } = data.author;
 
     return (
         <div className="bg-white rounded shadow px-2">
-            <Header as="h2" style={{ marginBottom: '2px', paddingTop: '20px' }}> {firstName} {lastName} </Header>
+            <Grid columns='equal' verticalAlign='middle'>
+                <Grid.Column mobile={4} tablet={4} computer={4}>
+                    <Image rounded className='h-40 object-cover object-top w-full' src={`${process.env.REACT_APP_URI_API}/${image}`} />
+                </Grid.Column>
+                <Grid.Column>
+                    <Header as="h2" style={{ marginBottom: '2px', paddingTop: '20px' }}> {firstName} {lastName} </Header>
+                    <div className="text-gray-700">
+                        {description}
+                    </div>
+                </Grid.Column>
+            </Grid>
             {books ?
                 <div className="w-full">
                     <Header as="h3" style={{ marginBottom: '10px', paddingTop: '15px' }}> Books </Header>
