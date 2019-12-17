@@ -1,17 +1,29 @@
 import React from 'react';
-import { Grid, Divider } from 'semantic-ui-react';
+import { NavLink } from "react-router-dom";
+import { Grid, Divider, Button } from 'semantic-ui-react';
+import Author from '../Authors/Author';
 
 const Book = ({ book, deleteBook }) => {
-    let { title, description, image } = book;
+    let { id, title, description, image, author } = book;
     return (
-        <Grid style={{width: '100%'}} columns='equal' verticalAlign='middle' padded>
+        <Grid style={{ width: '100%' }} columns='equal' verticalAlign='middle' padded>
             <Grid.Row>
-                <Grid.Column>
+                <Grid.Column mobile={9} computer={3} textAlign="center">
                     <img src={`${process.env.REACT_APP_URI_API}/${image}`}></img>
                 </Grid.Column>
-                <Grid.Column width={13}>
-                    <div className="font-semibold text-lg"> {title} </div>
-                    <div  className="text-sm text-gray-700"> {description} </div>
+                <Grid.Column mobile={16} computer={13}>
+                    <Grid textAlign="justified" columns={2} verticalAlign="middle">
+                        <Grid.Row>
+                            <Grid.Column mobile={12} floated="left">
+                                <div className="mt-4 sm:mt-0 font-semibold text-lg"> {title} </div>
+                                <div className="text-base text-gray-600"> {author.firstName} {author.lastName} </div>
+                            </Grid.Column>
+                            <Grid.Column width={3} floated="right">
+                                <Button as={NavLink} size='mini' to={`/books/${id}/edit`} basic color="black"> Edit </Button>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+                    <div className="text-sm text-gray-700"> {description} </div>
                 </Grid.Column>
                 {/* <Grid.Column width={2}>
                     <button className="btn btn-red" onClick={() => deleteBook(book.id)}> Delete </button>

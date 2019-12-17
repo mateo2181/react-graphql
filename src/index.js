@@ -16,17 +16,25 @@ import { checkToken } from './utils/storage';
 const authLink = setContext((_, { headers }) => {
     const token = checkToken();
     return {
-        headers: { ...headers, token: token ? `${token}` : ''}
-      }
+        headers: { ...headers, token: token ? `${token}` : '' }
+    }
 });
 
 const httpLink = createUploadLink({
     uri: process.env.REACT_APP_URI_GRAPHQL
 })
 
+const cache = new InMemoryCache({
+    cacheRedirects: {
+        Query: {
+            author: (_, args, { getCacheKey }) =>
+                getCacheKey({ __typename: 'Author', id: args.id })
+        },
+    },
+});
 const client = new ApolloClient({
     link: authLink.concat(httpLink),
-    cache: new InMemoryCache()
+    cache: cache
 })
 
 ReactDOM.render(

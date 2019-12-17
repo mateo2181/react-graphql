@@ -8,6 +8,7 @@ import Header from './components/Header';
 import Books from './components/Books';
 import CreateBook from './components/Books/Create';
 import { Responsive, Segment, Grid } from 'semantic-ui-react'
+import EditBook from './components/Books/Edit';
 
 const initialState = {
   user: localStorage.getItem('user'),
@@ -58,14 +59,15 @@ function App() {
   return (
     <React.Fragment>
       <div className="App">
-        <Grid centered style={{ padding: '10px 0', backgroundColor: '#dadada', minHeight: '100vh' }}>
-          <Grid.Column style={{ maxWidth: 700 }}>
+        <Grid padded style={{ padding: '10px 0', backgroundColor: '#dadada', minHeight: '100vh' }}>
+          <Grid.Column style={{ maxWidth: 700, margin: '0 auto' }}>
             <Header store={store} dispatch={dispatch} />
             <Switch>
               <Route store={store} dispatch={dispatch} path="/" exact component={() => <Login store={store} dispatch={dispatch} />} />
               <Route path="/login" component={() => <Login store={store} dispatch={dispatch} />} />
               <Route path="/authors" component={AuthorsRoute} />
               <Route exact path="/books/create" component={CreateBook} />
+              <Route path="/books/:id/edit" component={EditBook} />
               <Route path="/books" component={Books} />
             </Switch>
           </Grid.Column>

@@ -46,3 +46,15 @@ mutation createAuthor($firstName: String!,$lastName: String!,$description: Strin
   }
 }
 `;
+
+export const EDIT_AUTHOR = gql`
+mutation editAuthor($id: ID!,$firstName: String!,$lastName: String!,$description: String,$nationality: String!,$file: Upload) {
+  editAuthor(id: $id,firstName: $firstName,lastName: $lastName, description: $description,nationality: $nationality,file: $file) {   
+    firstName
+    lastName
+    description
+    nationality
+    image
+  }
+}
+`;

@@ -6,11 +6,11 @@ const BookAuthor = ({ book }) => {
     return (
         <Grid style={{width: '100%'}} columns='equal' verticalAlign='middle' padded>
         <Grid.Row>
-            <Grid.Column>
+            <Grid.Column mobile={9} computer={3}>
                 <img src={`${process.env.REACT_APP_URI_API}/${image}`}></img>
             </Grid.Column>
-            <Grid.Column width={13}>
-                <div className="font-semibold text-lg"> {title} </div>
+            <Grid.Column mobile={16} computer={13}>
+                <div className="mt-4 sm:mt-0 font-semibold text-lg"> {title} </div>
                 <div  className="text-sm text-gray-700"> {description} </div>
             </Grid.Column>
             {/* <Grid.Column width={2}>

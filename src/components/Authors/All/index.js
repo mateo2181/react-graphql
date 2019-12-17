@@ -12,16 +12,14 @@ const Authors = () => {
     if (loading) return "Loading";
     if (error) return <React.Fragment>Error :(</React.Fragment>;
     return (
-        <Container className="bg-white rounded">
-            <Grid padded>
-                <Grid.Column>
-                    <Button size={'small'} className="cursor-pointer" as={Link} icon labelPosition='left' to={`/authors/create`} >
-                        <Icon name='plus' />
-                        New Author
+        <Grid padded className="bg-white rounded">
+            <Grid.Column width={16}>
+                <Button size={'small'} className="cursor-pointer" as={Link} icon labelPosition='left' to={`/authors/create`} >
+                    <Icon name='plus' />
+                    New Author
                     </Button>
-                </Grid.Column>
-            </Grid>
-            <Grid columns={2}>
+            </Grid.Column>
+            <Grid mobile={1} tablet={2}>
                 {data.authors.map(a => (
                     <Grid.Column mobile={16} tablet={8} computer={8} key={a.id}>
                         <Author author={a} key={a.id} />
@@ -29,7 +27,7 @@ const Authors = () => {
                 ))}
 
             </Grid>
-        </Container>
+        </Grid>
     );
 }
 

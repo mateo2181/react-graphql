@@ -48,7 +48,7 @@ function CreateBook() {
                     <Grid columns='equal' verticalAlign='middle' padded style={{ width: '100%' }}>
                         <Header as="h2" style={{ marginBottom: '2px', paddingTop: '20px' }}> Create Book </Header>
                         <Grid.Row>
-                            <Grid.Column width={10}>
+                            <Grid.Column mobile={16} tablet={10} computer={10}>
                                 <div className="mb-2 w-full">
                                     <select onChange={e => setAuthor(e.target.value)} className="w-full">
                                         <option value={null}> Author </option>
@@ -59,7 +59,7 @@ function CreateBook() {
                                     <Input onChange={e => setTitle(e.target.value)} value={title} className="w-full" placeholder="Title" type="text" />
                                 </div>
                                 <div className="mb-2 w-full">
-                                    <TextArea rows="5" onChange={e => setDescription(e.target.value)} value={description} className="w-full" placeholder="Description" />
+                                    <TextArea rows="6" onChange={e => setDescription(e.target.value)} value={description} className="w-full" placeholder="Description" />
                                 </div>
                             </Grid.Column>
                             <Grid.Column>

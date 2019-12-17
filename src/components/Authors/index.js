@@ -4,11 +4,13 @@ import Authors from './All'
 import AuthorDetail from './Detail'
 import PrivateRoute from '../PrivateRoute'
 import CreateAuthor from './Create'
+import EditAuthor from './Edit'
 
 const AuthorsRoute = () => (
   <Switch>
     <Route exact path="/authors" component={Authors} />
     <Route exact path="/authors/create" component={CreateAuthor} />
+    <Route path="/authors/:id/edit" component={EditAuthor} />
     <Route path="/authors/:id" component={AuthorDetail} />
   </Switch>
 )

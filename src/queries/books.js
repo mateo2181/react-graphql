@@ -7,6 +7,11 @@ export const GET_BOOKS = gql`
         title
         description
         image
+        author {
+          id
+          firstName
+          lastName
+        }
     }
   }
 `;
@@ -17,6 +22,10 @@ query Book($id: ID!) {
         id
         title
         description
+        image
+        author {
+          id
+        }
     }
   }
 `;
@@ -32,16 +41,24 @@ mutation createBook($title: String!, $description: String!,$authorId: ID!, $file
 }
 `;
 
-export const DELETE_BOOK = gql`
-mutation deleteBook($id: ID!) {
-  deleteBook(id: $id)
+export const EDIT_BOOK = gql`
+mutation editBook($id: ID!,$title: String!, $description: String!,$authorId: ID!, $file: Upload) {
+  editBook(id: $id,title:$title,description:$description,authorId: $authorId, file: $file) {
+    id
+    title
+    description
+    image
+    author {
+      id
+      firstName
+      lastName
+    }
+  }
 }
 `;
 
-export const SINGLE_UPLOAD_BOOK = gql`
-mutation singleUploadBook($file: Upload!) {
-  singleUploadBook(file: $file) {
-    id
-  }
+export const DELETE_BOOK = gql`
+mutation deleteBook($id: ID!) {
+  deleteBook(id: $id)
 }
 `;

@@ -11,7 +11,7 @@ const Author = ({ author }) => {
     return (
         <Grid padded>
             <Grid.Row className="border-b">
-                <Grid.Column mobile={4} tablet={6} computer={6}>
+                <Grid.Column mobile={5} tablet={6} computer={6}>
                     <Image rounded className='h-24 object-cover object-top w-full' src={`${process.env.REACT_APP_URI_API}/${image}`} />
                 </Grid.Column>
                 <Grid.Column verticalAlign='middle' width={10}>
@@ -19,6 +19,7 @@ const Author = ({ author }) => {
                         <Card.Header className="text-lg"> {`${firstName} ${lastName}`} </Card.Header>
                         <Card.Meta className="text-gray-500 text-sm"> {nationality} </Card.Meta>
                         <div className="mt-2">
+                            <Button as={NavLink} size='mini' to={`/authors/${id}/edit`} basic color="black"> Edit </Button>
                             <Button as={NavLink} size='mini' to={`/authors/${id}`} basic primary> Books </Button>
                         </div>
                     </Card.Content>

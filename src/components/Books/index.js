@@ -27,7 +27,7 @@ const Books = () => {
     if (loading) return "Loading";
     if (error) return <React.Fragment>Error :(</React.Fragment>;
     return (
-        <Container className="bg-white rounded">
+        <Grid padded className="bg-white rounded">
             <Grid padded>
                 <Grid.Column>
                     <Button size={'small'} className="cursor-pointer" as={Link} icon labelPosition='left' to={`/books/create`} >
@@ -41,7 +41,7 @@ const Books = () => {
                     <Book deleteBook={openModalDeleteBook} book={b} key={b.id} />
                 ))}
             </Grid>
-        </Container>
+        </Grid>
     );
 }
 

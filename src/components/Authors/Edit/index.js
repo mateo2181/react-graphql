@@ -1,32 +1,40 @@
-import React, { useState } from 'react';
-import { useMutation } from '@apollo/react-hooks';
-import { CREATE_AUTHOR, GET_AUTHORS } from '../../../queries/authors';
+import React, { useState, useEffect } from 'react';
+import { CacheResolver } from 'apollo-cache-inmemory';
+import { useMutation, useQuery } from '@apollo/react-hooks';
+import { EDIT_AUTHOR, GET_AUTHOR_DETAIL, GET_AUTHORS } from '../../../queries/authors';
 import { useHistory } from "react-router-dom";
 import { Dropzone } from '../../utils/Dropzone';
-import { Form, Grid, Header, Input, Button, TextArea } from 'semantic-ui-react';
+import { Form, Grid, Header, Input, Button, TextArea, Image } from 'semantic-ui-react';
 
-function CreateAuthor() {
+function EditAuthor(props) {
+    const { match: { params: { id } } } = props;
+    const { loading, error, data } = useQuery(GET_AUTHOR_DETAIL, {
+        variables: { id }
+    });
+
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [description, setDescription] = useState('');
     const [nationality, setNationality] = useState('');
     const [image, setImage] = useState(null);
+    const [currentImage, setCurrentImage] = useState(null);
 
     let history = useHistory();
 
-    const [createAuthor] = useMutation(CREATE_AUTHOR,
+    const [editAuthor] = useMutation(EDIT_AUTHOR,
         {
-            update(cache, { data: { createAuthor } }) {
+            update(cache, { data: { editAuthor } }) {
                 const { authors } = cache.readQuery({ query: GET_AUTHORS });
+                const authorsNew = authors.map(a => { return (a.id == id) ? editAuthor : a });
                 cache.writeQuery({
                     query: GET_AUTHORS,
-                    data: { authors: authors.concat([createAuthor]) },
+                    data: { authors: authorsNew },
                 });
             }
         });
 
     async function saveAuthor() {
-        await createAuthor({ variables: { firstName: firstname, lastName: lastname, description, nationality, file: image } });
+        await editAuthor({ variables: { id,firstName: firstname, lastName: lastname, description, nationality, file: image } });
         setFirstname('')
         setLastname('')
         setDescription('')
@@ -38,11 +46,27 @@ function CreateAuthor() {
         setImage(file);
     };
 
+
+    useEffect(() => {
+        if (data) {
+            // mutate data if you need to
+            setFirstname(data.author.firstName)
+            setLastname(data.author.lastName)
+            setDescription(data.author.description)
+            setNationality(data.author.nationality)
+            setCurrentImage(data.author.image)
+        }
+    }, [data])
+
+    if (loading) return "Loading Author...";
+    if (error) return <React.Fragment>Error :(</React.Fragment>;
+
+
     return (
         <div className="bg-white rounded shadow px-2">
             <Form className="w-full">
                 <Grid columns='equal' verticalAlign='middle' padded style={{ width: '100%' }}>
-                    <Header as="h2" style={{ marginBottom: '2px', paddingTop: '20px' }}> Create Author </Header>
+                    <Header as="h2" style={{ marginBottom: '2px', paddingTop: '20px' }}> Edit Author </Header>
                     <Grid.Row>
                         <Grid.Column mobile={16} tablet={10} computer={10}>
                             <div className="mb-2 w-full">
@@ -59,11 +83,12 @@ function CreateAuthor() {
                             </div>
                         </Grid.Column>
                         <Grid.Column>
+                            {currentImage && !image ? <Image className='mx-auto w-30 h-40 object-top' src={`${process.env.REACT_APP_URI_API}/${currentImage}`} /> : ''}
                             <Dropzone imageEvent={onChangeFile} />
                         </Grid.Column>
                     </Grid.Row>
                     <div className="pb-2 w-full">
-                        <Button primary onClick={saveAuthor}> Save </Button>
+                        <Button primary onClick={saveAuthor}> Update </Button>
                     </div>
                 </Grid>
             </Form>
@@ -71,4 +96,4 @@ function CreateAuthor() {
     )
 }
 
-export default CreateAuthor;
+export default EditAuthor;
