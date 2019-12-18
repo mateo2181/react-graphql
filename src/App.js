@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useContext } from 'react';
 import './App.css';
 import AuthorsRoute from './components/Authors';
 import Login from './components/Login';
@@ -9,13 +9,9 @@ import Books from './components/Books';
 import CreateBook from './components/Books/Create';
 import { Responsive, Segment, Grid } from 'semantic-ui-react'
 import EditBook from './components/Books/Edit';
+import Context from './context';
 
-const initialState = {
-  user: localStorage.getItem('user'),
-  token: !!localStorage.getItem('token'),
-  isAuthenticating: false,
-  authError: null,
-}
+
 
 function reducer(state, action) {
   switch (action.type) {
@@ -54,17 +50,19 @@ function reducer(state, action) {
 }
 
 function App() {
-  const [store, dispatch] = useReducer(reducer, initialState)
+  const stateContext = useContext(Context);
+  const [state, dispatch] = useReducer(reducer, stateContext)
 
   return (
     <React.Fragment>
+      <Context.Provider value={{state, dispatch}}>
       <div className="App">
         <Grid padded style={{ padding: '10px 0', backgroundColor: '#dadada', minHeight: '100vh' }}>
           <Grid.Column style={{ maxWidth: 700, margin: '0 auto' }}>
-            <Header store={store} dispatch={dispatch} />
+            <Header/>
             <Switch>
-              <Route store={store} dispatch={dispatch} path="/" exact component={() => <Login store={store} dispatch={dispatch} />} />
-              <Route path="/login" component={() => <Login store={store} dispatch={dispatch} />} />
+              <Route path="/" exact component={() => <Login/>} />
+              <Route path="/login" component={() => <Login/>} />
               <Route path="/authors" component={AuthorsRoute} />
               <Route exact path="/books/create" component={CreateBook} />
               <Route path="/books/:id/edit" component={EditBook} />
@@ -73,6 +71,7 @@ function App() {
           </Grid.Column>
         </Grid>
       </div>
+      </Context.Provider>
     </React.Fragment>
   );
 }

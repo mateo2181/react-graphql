@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { LOGIN_MUTATION } from '../../queries/login';
 import { GET_LOGGED_USER } from '../../queries/loggedUser';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useHistory } from "react-router-dom";
 import { Input, Header, Button } from 'semantic-ui-react';
+import Context from '../../context';
 
 function Login(props) {
 
     let history = useHistory();
+
+    const {state, dispatch} = useContext(Context);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -19,16 +22,16 @@ function Login(props) {
     async function loginForm() {
         // event.preventDefault();
         try {
-            props.dispatch({ type: 'AUTH_BEGIN' });
+            dispatch({ type: 'AUTH_BEGIN' });
             const user = await LoginMutation({ variables: { email, password } })
             localStorage.setItem('token', user.data.login.token)
             localStorage.setItem('user', user.data.login.user)
-            props.dispatch({ type: 'AUTH_SUCCESS', user: user.data.login.user, token: user.data.login.token });
+            dispatch({ type: 'AUTH_SUCCESS', user: user.data.login.user, token: user.data.login.token });
             history.replace('/authors')
             // return true;
         } catch (e) {
             console.error(`An error occured: `, e.graphQLErrors[0].message)
-            props.dispatch({ type: 'AUTH_FAILURE', error: e.graphQLErrors[0].message });
+            dispatch({ type: 'AUTH_FAILURE', error: e.graphQLErrors[0].message });
             //   this.props.history.replace('/login')
         }
     }
@@ -60,8 +63,8 @@ function Login(props) {
                 <div className="pb-2 w-full">
                     <Button primary type="submit"> Login </Button>
                 </div>
-                {props.store.authError ?
-                    <div className="text-red-600 text-sm"> {props.store.authError} </div> : ''
+                {state.authError ?
+                    <div className="text-red-600 text-sm"> {state.authError} </div> : ''
                 }
             </form>
 
