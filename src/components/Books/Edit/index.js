@@ -82,7 +82,7 @@ function EditBook(props) {
                                 </div>
                             </Grid.Column>
                             <Grid.Column>
-                                {currentImage && !image ? <Image className='mx-auto w-30 h-40 object-top' src={`${process.env.REACT_APP_URI_API}/${currentImage}`} /> : ''}
+                                {currentImage && !image ? <Image className='mx-auto w-30 h-40 object-top' src={`${currentImage}`} /> : ''}
                                 <Dropzone imageEvent={onChangeFile} />
                             </Grid.Column>
                         </Grid.Row>

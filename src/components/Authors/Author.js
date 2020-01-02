@@ -12,7 +12,7 @@ const Author = ({ author }) => {
         <Grid padded>
             <Grid.Row className="border-b">
                 <Grid.Column mobile={5} tablet={6} computer={6}>
-                    <Image rounded className='h-24 object-cover object-top w-full' src={`${process.env.REACT_APP_URI_API}/${image}`} />
+                    <Image rounded className='h-24 object-cover object-top w-full' src={`${image}`} />
                 </Grid.Column>
                 <Grid.Column verticalAlign='middle' width={10}>
                     <Card.Content>

@@ -9,7 +9,7 @@ const Book = ({ book, deleteBook }) => {
         <Grid style={{ width: '100%' }} columns='equal' verticalAlign='middle' padded>
             <Grid.Row>
                 <Grid.Column mobile={9} computer={3} textAlign="center">
-                    <img src={`${process.env.REACT_APP_URI_API}/${image}`}></img>
+                    <img src={`${image}`}></img>
                 </Grid.Column>
                 <Grid.Column mobile={16} computer={13}>
                     <Grid textAlign="justified" columns={2} verticalAlign="middle">

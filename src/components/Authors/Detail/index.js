@@ -21,7 +21,7 @@ function AuthorDetail(props) {
         <div className="bg-white rounded shadow px-2">
             <Grid columns='equal' verticalAlign='middle'>
                 <Grid.Column mobile={4} tablet={4} computer={4}>
-                    <Image rounded className='h-40 object-cover object-top w-full' src={`${process.env.REACT_APP_URI_API}/${image}`} />
+                    <Image rounded className='h-40 object-cover object-top w-full' src={`${image}`} />
                 </Grid.Column>
                 <Grid.Column>
                     <Header as="h2" style={{ marginBottom: '2px', paddingTop: '20px' }}> {firstName} {lastName} </Header>

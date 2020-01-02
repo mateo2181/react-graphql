@@ -7,7 +7,7 @@ const BookAuthor = ({ book }) => {
         <Grid style={{width: '100%'}} columns='equal' verticalAlign='middle' padded>
         <Grid.Row>
             <Grid.Column mobile={9} computer={3}>
-                <img src={`${process.env.REACT_APP_URI_API}/${image}`}></img>
+                <img src={`${image}`}></img>
             </Grid.Column>
             <Grid.Column mobile={16} computer={13}>
                 <div className="mt-4 sm:mt-0 font-semibold text-lg"> {title} </div>
