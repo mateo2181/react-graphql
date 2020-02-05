@@ -8,6 +8,7 @@ import EditAuthor from './Edit'
 
 const AuthorsRoute = () => (
   <Switch>
+    <Route exact path="/" component={Authors} />
     <Route exact path="/authors" component={Authors} />
     <Route exact path="/authors/create" component={CreateAuthor} />
     <Route path="/authors/:id/edit" component={EditAuthor} />
