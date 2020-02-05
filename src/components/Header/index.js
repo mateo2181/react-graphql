@@ -26,7 +26,7 @@ function Header(props) {
                     Books
                 </Menu.Item>
 
-                <Menu.Menu position='right'>
+                {/* <Menu.Menu position='right'>
                     {state.token ?
                         <Menu.Item> <button onClick={logout}> Logout </button> </Menu.Item>
                         :
@@ -34,7 +34,7 @@ function Header(props) {
                             Login
                         </Menu.Item>
                     }
-                </Menu.Menu>
+                </Menu.Menu> */}
             </Container>
         </Menu>
     );
