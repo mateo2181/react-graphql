@@ -18,7 +18,7 @@ function AuthorDetail(props) {
     let { firstName, lastName, description, image, books } = data.author;
 
     return (
-        <div className="bg-white rounded shadow px-2">
+        <Grid padded className="bg-white rounded">
             <Grid columns='equal' verticalAlign='middle'>
                 <Grid.Column mobile={4} tablet={4} computer={4}>
                     <Image rounded className='h-40 object-cover object-top w-full' src={`${image}`} />
@@ -30,16 +30,19 @@ function AuthorDetail(props) {
                     </div>
                 </Grid.Column>
             </Grid>
-            {books ?
+            {books.length > 0 ?
                 <div className="w-full">
                     <Header as="h3" style={{ marginBottom: '10px', paddingTop: '15px' }}> Books </Header>
                     <Grid>
                         {books.map(b => <BookAuthor key={b.id} book={b} />)}
                     </Grid>
                 </div>
-                : ''
+                : 
+                <Grid className="w-full mt-2">
+                    <Grid.Column className="text-lg"> No Books </Grid.Column>
+                </Grid>
             }
-        </div>
+        </Grid>
     );
 }
 

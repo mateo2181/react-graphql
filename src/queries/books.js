@@ -31,7 +31,7 @@ query Book($id: ID!) {
 `;
 
 export const CREATE_BOOK = gql`
-mutation createBook($title: String!, $description: String!,$authorId: ID!, $file: Upload!) {
+mutation createBook($title: String!, $description: String!,$authorId: ID!, $file: Upload) {
   createBook(title:$title,description:$description,authorId: $authorId, file: $file) {
     id
     title

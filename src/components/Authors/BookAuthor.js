@@ -3,6 +3,7 @@ import { Grid, Divider } from 'semantic-ui-react';
 
 const BookAuthor = ({ book }) => {
     let { title, description, image } = book;
+    image = image ? image : '/book-default.jpg';
     return (
         <Grid style={{width: '100%'}} columns='equal' verticalAlign='middle' padded>
         <Grid.Row>

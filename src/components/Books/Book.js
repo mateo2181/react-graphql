@@ -5,6 +5,7 @@ import Author from '../Authors/Author';
 
 const Book = ({ book, deleteBook }) => {
     let { id, title, description, image, author } = book;
+    image = image ? image : '/book-default.jpg';
     return (
         <Grid style={{ width: '100%' }} columns='equal' verticalAlign='middle' padded>
             <Grid.Row>
