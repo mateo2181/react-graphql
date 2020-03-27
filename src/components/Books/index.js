@@ -7,7 +7,13 @@ import { Grid, Button, Divider, Container, Icon } from 'semantic-ui-react';
 
 const Books = () => {
 
-    const { loading, error, data } = useQuery(GET_BOOKS);
+    const { loading, error, data, fetchMore } = useQuery(GET_BOOKS, {
+        variables: {
+            offset: 0,
+            limit: 10
+        },
+        fetchPolicy: "cache-and-network"
+    });
     const [deleteBook] = useMutation(DELETE_BOOK,
         {
             update(cache, { data: { deleteBook } }) {
@@ -24,7 +30,6 @@ const Books = () => {
         // console.log(id);
     };
 
-    if (loading) return "Loading";
     if (error) return <React.Fragment>Error :(</React.Fragment>;
     return (
         <Grid padded className="bg-white rounded">
@@ -37,10 +42,27 @@ const Books = () => {
                 </Grid.Column>
             </Grid>
             <Grid>
-                {data.books.map(b => (
+                {data ? data.books.map(b => (
                     <Book deleteBook={openModalDeleteBook} book={b} key={b.id} />
-                ))}
+                )) : ''}
             </Grid>
+            {loading ? <Grid> <Grid.Column> Loading... </Grid.Column> </Grid> : ''}
+            <Grid.Column width={16}>
+                <Button
+                    size={'small'}
+                    onClick={() =>
+                        fetchMore({
+                            variables: { offset: data.books.length },
+                            updateQuery: (prev, { fetchMoreResult }) => {
+                                if (!fetchMoreResult) return prev;
+                                return Object.assign({}, prev, {
+                                    books: [...prev.books, ...fetchMoreResult.books]
+                                });
+                            }
+                        })
+                    }
+                > Load More </Button>
+            </Grid.Column>
         </Grid>
     );
 }

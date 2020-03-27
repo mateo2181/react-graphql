@@ -1,8 +1,8 @@
 import { gql } from 'apollo-boost';
 
 export const GET_BOOKS = gql`
-  {
-    books {
+query Books($offset: Int, $limit: Int) {
+    books(offset: $offset, limit: $limit) {
         id
         title
         description

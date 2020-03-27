@@ -1,8 +1,8 @@
 import { gql } from 'apollo-boost';
 
 export const GET_AUTHORS = gql`
-  {
-    authors {
+  query Authors($offset: Int, $limit: Int) {
+    authors(offset: $offset, limit: $limit) {
         id
         firstName
         lastName
@@ -36,7 +36,7 @@ query Author($id: ID!) {
 `;
 
 export const CREATE_AUTHOR = gql`
-mutation createAuthor($firstName: String!,$lastName: String!,$description: String!,$nationality: String!,$file: Upload!) {
+mutation createAuthor($firstName: String!,$lastName: String!,$description: String!,$nationality: String!,$file: Upload) {
   createAuthor(firstName: $firstName,lastName: $lastName, description: $description,nationality: $nationality,file: $file) {   
     firstName
     lastName

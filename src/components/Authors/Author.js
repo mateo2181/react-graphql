@@ -7,7 +7,8 @@ const Author = ({ author }) => {
     let { id, firstName, lastName, description, nationality, image, books } = author;
 
     const countBooks = (<div> Books: {books.length} </div>);
-
+    image = image ? image : '/author-default.jpg';
+    
     return (
         <Grid padded>
             <Grid.Row className="border-b">
