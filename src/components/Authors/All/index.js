@@ -1,9 +1,18 @@
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import { GET_AUTHORS } from '../../../queries/authors';
 import Author from '../Author';
 import { Link } from "react-router-dom";
 import { Grid, Button, Container, Icon } from 'semantic-ui-react';
+import { FlexWrap } from '../../../globalStyles';
+import styled from 'styled-components';
+
+const WrapperAuthor = styled.div`
+    width: 50%;
+    @media(max-width: 630px) {
+        width: 100%;
+    }   
+`;
 
 const Authors = () => {
 
@@ -25,14 +34,13 @@ const Authors = () => {
                     <Icon name='plus' /> New Author
                 </Button>
             </Grid.Column>
-            <Grid mobile={1} tablet={2}>
+            <FlexWrap className="w-full">
                 {data ? data.authors.map(a => (
-                    <Grid.Column mobile={16} tablet={8} computer={8} key={a.id}>
-                        <Author author={a} key={a.id} />
-                    </Grid.Column>
-                )) : ''}
+                    <WrapperAuthor key={a.id}> <Author author={a} key={a.id} /> </WrapperAuthor>
+                )) 
+                : ''}
 
-            </Grid>
+            </FlexWrap>
             {/* </Grid> : ''} */}
             {loading ? <Grid> <Grid.Column> Loading... </Grid.Column> </Grid>: ''}
             <Grid.Column width={16}>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CacheResolver } from 'apollo-cache-inmemory';
-import { useMutation, useQuery } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/client';
 import { EDIT_AUTHOR, GET_AUTHOR_DETAIL, GET_AUTHORS } from '../../../queries/authors';
 import { useHistory } from "react-router-dom";
 import { Dropzone } from '../../utils/Dropzone';

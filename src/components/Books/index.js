@@ -1,9 +1,9 @@
 import React from 'react';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/client';
 import { GET_BOOKS, DELETE_BOOK } from '../../queries/books';
 import Book from './Book';
 import { Link } from "react-router-dom";
-import { Grid, Button, Divider, Container, Icon } from 'semantic-ui-react';
+import { Grid, Button, Icon } from 'semantic-ui-react';
 
 const Books = () => {
 
@@ -41,11 +41,11 @@ const Books = () => {
                     </Button>
                 </Grid.Column>
             </Grid>
-            <Grid>
+            <div>
                 {data ? data.books.map(b => (
                     <Book deleteBook={openModalDeleteBook} book={b} key={b.id} />
                 )) : ''}
-            </Grid>
+            </div>
             {loading ? <Grid> <Grid.Column> Loading... </Grid.Column> </Grid> : ''}
             <Grid.Column width={16}>
                 <Button

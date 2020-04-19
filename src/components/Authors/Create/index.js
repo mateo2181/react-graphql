@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 import { CREATE_AUTHOR, GET_AUTHORS } from '../../../queries/authors';
 import { useHistory } from "react-router-dom";
 import { Dropzone } from '../../utils/Dropzone';

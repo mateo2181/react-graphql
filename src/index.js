@@ -4,12 +4,9 @@ import ReactDOM from 'react-dom';
 import 'semantic-ui-css/semantic.min.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { ApolloProvider } from 'react-apollo'
-import { ApolloClient } from 'apollo-client'
-import { createUploadLink } from 'apollo-upload-client'
-import { createHttpLink } from 'apollo-link-http'
-import { InMemoryCache } from 'apollo-cache-inmemory'
 import { BrowserRouter as Router } from "react-router-dom";
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import { createUploadLink } from 'apollo-upload-client'
 import { setContext } from "apollo-link-context";
 import { checkToken } from './utils/storage';
 

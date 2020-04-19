@@ -7,9 +7,11 @@ import PrivateRoute from './components/PrivateRoute';
 import Header from './components/Header';
 import Books from './components/Books';
 import CreateBook from './components/Books/Create';
-import { Responsive, Segment, Grid } from 'semantic-ui-react'
 import EditBook from './components/Books/Edit';
 import Context from './context';
+import { ThemeProvider } from 'styled-components'
+import { lightTheme, darkTheme, GlobalStyles, Wrapper, Container } from './globalStyles'
+import ButtonTheme from './components/utils/ButtonTheme';
 
 
 
@@ -43,6 +45,10 @@ function reducer(state, action) {
         token: null,
         authError: null,
       }
+    case 'SET_THEME':
+      return {
+        ...state, theme: action.payload
+      }
 
     default:
       return state
@@ -55,23 +61,27 @@ function App() {
 
   return (
     <React.Fragment>
-      <Context.Provider value={{state, dispatch}}>
-      <div className="App">
-        <Grid padded style={{ padding: '10px 0', backgroundColor: '#dadada', minHeight: '100vh' }}>
-          <Grid.Column style={{ maxWidth: 700, margin: '0 auto' }}>
-            <Header/>
-            <Switch>
-              <Route exact path="/" component={AuthorsRoute} />
-              <Route path="/login" component={() => <Login/>} />
-              <Route path="/authors" component={AuthorsRoute} />
-              <Route exact path="/books/create" component={CreateBook} />
-              <Route path="/books/:id/edit" component={EditBook} />
-              <Route path="/books" component={Books} />
-            </Switch>
-          </Grid.Column>
-        </Grid>
-      </div>
-      </Context.Provider>
+      <ThemeProvider theme={state.theme == 'light' ? lightTheme : darkTheme}>
+        <Context.Provider value={{ state, dispatch }}>
+          <ButtonTheme />
+          <GlobalStyles />
+          <div className="App">
+            <Wrapper>
+              <Container>
+                <Header />
+                <Switch>
+                  <Route exact path="/" component={AuthorsRoute} />
+                  <Route path="/login" component={() => <Login />} />
+                  <Route path="/authors" component={AuthorsRoute} />
+                  <Route exact path="/books/create" component={CreateBook} />
+                  <Route path="/books/:id/edit" component={EditBook} />
+                  <Route path="/books" component={Books} />
+                </Switch>
+              </Container>
+            </Wrapper>
+          </div>
+        </Context.Provider>
+      </ThemeProvider>
     </React.Fragment>
   );
 }
