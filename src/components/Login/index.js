@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { LOGIN_MUTATION } from '../../queries/login';
 import { GET_LOGGED_USER } from '../../queries/loggedUser';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/client';
 import { useHistory } from "react-router-dom";
 import { Input, Header, Button } from 'semantic-ui-react';
 import Context from '../../context';

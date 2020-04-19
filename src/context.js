@@ -5,6 +5,7 @@ const initialState = {
     token: !!localStorage.getItem('token'),
     isAuthenticating: false,
     authError: null,
+    theme: 'light'
 }
 
 const Context = React.createContext(initialState);

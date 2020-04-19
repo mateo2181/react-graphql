@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import { GET_AUTHOR_DETAIL } from '../../../queries/authors';
 import { Header, Grid, Image } from 'semantic-ui-react';
 import BookAuthor from '../BookAuthor';

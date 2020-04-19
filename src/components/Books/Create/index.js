@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useMutation, useQuery } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_BOOK, GET_BOOKS } from '../../../queries/books';
 import { GET_AUTHORS } from '../../../queries/authors';
 import { useHistory } from "react-router-dom";
