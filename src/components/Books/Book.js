@@ -8,7 +8,8 @@ import { FlexWrap, FlexWrapBetween } from '../../globalStyles.js';
 const WrapperBook = styled(FlexWrap)`
     align-items: center; 
     margin-bottom: 3px;
-    padding-bottom: 5px;
+    padding-bottom: 8px;
+    padding-top: 8px;
     border-bottom: 1px solid #cacaca;
 `;
 
