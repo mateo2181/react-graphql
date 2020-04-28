@@ -4,6 +4,7 @@ import { GET_BOOKS, DELETE_BOOK } from '../../queries/books';
 import Book from './Book';
 import { Link } from "react-router-dom";
 import { Grid, Button, Icon } from 'semantic-ui-react';
+import { FlexWrap } from '../../globalStyles';
 
 const Books = () => {
 
@@ -33,20 +34,19 @@ const Books = () => {
     if (error) return <React.Fragment>Error :(</React.Fragment>;
     return (
         <Grid padded className="bg-white rounded">
-            <Grid padded>
-                <Grid.Column>
-                    <Button size={'small'} className="cursor-pointer" as={Link} icon labelPosition='left' to={`/books/create`} >
-                        <Icon name='plus' />
-                        New Book
-                    </Button>
-                </Grid.Column>
-            </Grid>
-            <div>
+            <Grid.Column width={16}>
+                <Button size={'small'} className="cursor-pointer" as={Link} icon labelPosition='left' to={`/books/create`} >
+                    <Icon name='plus' />
+                    New Book
+                </Button>
+            </Grid.Column>
+            
+            <FlexWrap data-testid="author-children" className="w-full">
                 {data ? data.books.map(b => (
                     <Book deleteBook={openModalDeleteBook} book={b} key={b.id} />
                 )) : ''}
-            </div>
-            {loading ? <Grid> <Grid.Column> Loading... </Grid.Column> </Grid> : ''}
+            </FlexWrap>
+            {loading ? <div> Loading... </div> : ''}
             <Grid.Column width={16}>
                 <Button
                     size={'small'}

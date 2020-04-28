@@ -24,8 +24,8 @@ function EditAuthor(props) {
     const [editAuthor] = useMutation(EDIT_AUTHOR,
         {
             update(cache, { data: { editAuthor } }) {
-                const { authors } = cache.readQuery({ query: GET_AUTHORS });
-                const authorsNew = authors.map(a => { return (a.id == id) ? editAuthor : a });
+                const { data } = cache.readQuery({ query: GET_AUTHORS });
+                const authorsNew = data.authors.map(a => { return (a.id == id) ? editAuthor : a });
                 cache.writeQuery({
                     query: GET_AUTHORS,
                     data: { authors: authorsNew },

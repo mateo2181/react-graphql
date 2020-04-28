@@ -34,7 +34,7 @@ const Authors = () => {
                     <Icon name='plus' /> New Author
                 </Button>
             </Grid.Column>
-            <FlexWrap className="w-full">
+            <FlexWrap data-testid="author-children" className="w-full">
                 {data ? data.authors.map(a => (
                     <WrapperAuthor key={a.id}> <Author author={a} key={a.id} /> </WrapperAuthor>
                 )) 
@@ -42,7 +42,7 @@ const Authors = () => {
 
             </FlexWrap>
             {/* </Grid> : ''} */}
-            {loading ? <Grid> <Grid.Column> Loading... </Grid.Column> </Grid>: ''}
+            {loading ? <div> Loading... </div>: ''}
             <Grid.Column width={16}>
                 <Button
                     size={'small'}

@@ -37,6 +37,7 @@ function EditBook(props) {
     //     });
 
     async function saveBook() {
+        console.log(image);
         await editBook({ variables: { id, title, description, authorId, file: image } });
         setTitle('')
         setDescription('')
@@ -58,7 +59,7 @@ function EditBook(props) {
         }
     }, [dataBookDetail])
 
-    if (loading) return "Loading Authors...";
+    if (loading) return "Loading Book...";
 
     return (
         <div className="bg-white rounded shadow px-2">

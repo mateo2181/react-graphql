@@ -13,7 +13,7 @@ import { checkToken } from './utils/storage';
 const authLink = setContext((_, { headers }) => {
     const token = checkToken();
     return {
-        headers: { ...headers, token: token ? `${token}` : '' }
+        headers: { ...headers }
     }
 });
 

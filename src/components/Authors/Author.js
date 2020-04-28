@@ -42,7 +42,7 @@ const Author = ({ author }) => {
                 </ImageAuthor>
                 <ContentAuthor>
                     <Card.Content>
-                        <Card.Header className="text-lg"> {`${firstName} ${lastName}`} </Card.Header>
+                        <Card.Header data-testid="author-header" className="text-lg">{`${firstName} ${lastName}`}</Card.Header>
                         <Card.Meta className="text-gray-500 text-sm"> {nationality} </Card.Meta>
                         <div className="mt-2">
                             <Button as={NavLink} size='mini' to={`/authors/${id}/edit`} basic color="black"> Edit </Button>
