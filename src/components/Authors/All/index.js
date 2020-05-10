@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_AUTHORS } from '../../../queries/authors';
 import Author from '../Author';
@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Grid, Button, Container, Icon } from 'semantic-ui-react';
 import { FlexWrap } from '../../../globalStyles';
 import styled from 'styled-components';
+import useIntersection from '../../../hooks/useIntersection';
 
 const WrapperAuthor = styled.div`
     width: 50%;
@@ -16,6 +17,8 @@ const WrapperAuthor = styled.div`
 
 const Authors = () => {
 
+    const {isIntersecting, ref} = useIntersection({once: false});
+
     const { loading, error, data, fetchMore } = useQuery(GET_AUTHORS, {
         variables: {
             offset: 0,
@@ -23,6 +26,21 @@ const Authors = () => {
         },
         fetchPolicy: "cache-and-network"
     });
+
+    useEffect(() => {
+        if(!loading && isIntersecting) {
+            console.log("LOAD");
+            fetchMore({
+                variables: { offset: data.authors.length },
+                updateQuery: (prev, { fetchMoreResult }) => {
+                    if (!fetchMoreResult) return prev;
+                    return Object.assign({}, prev, {
+                        authors: [...prev.authors, ...fetchMoreResult.authors]
+                    });
+                }
+            })
+        }
+    },[isIntersecting])
 
     if (error) return <React.Fragment>Error :(</React.Fragment>;
     return (
@@ -42,23 +60,9 @@ const Authors = () => {
 
             </FlexWrap>
             {/* </Grid> : ''} */}
-            {loading ? <div> Loading... </div>: ''}
-            <Grid.Column width={16}>
-                <Button
-                    size={'small'}
-                    onClick={() =>
-                        fetchMore({
-                            variables: { offset: data.authors.length },
-                            updateQuery: (prev, { fetchMoreResult }) => {
-                                if (!fetchMoreResult) return prev;
-                                return Object.assign({}, prev, {
-                                    authors: [...prev.authors, ...fetchMoreResult.authors]
-                                });
-                            }
-                        })
-                    }
-                > Load More </Button>
-            </Grid.Column>
+            {loading ? <div style={{minHeight: '20vh'}}> Loading... </div>: ''}
+
+            <div ref={ref}></div>
         </Grid>
     );
 }

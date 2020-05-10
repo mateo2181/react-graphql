@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link, NavLink } from "react-router-dom";
-import BookAuthor from './BookAuthor';
-import { Grid, Card, Button } from 'semantic-ui-react';
+import { NavLink } from "react-router-dom";
+import { Card, Button } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { FlexWrap } from '../../globalStyles';
 

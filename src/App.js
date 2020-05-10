@@ -1,11 +1,11 @@
 import React, { useReducer, useContext } from 'react';
 import './App.css';
-import AuthorsRoute from './components/Authors';
+import AuthorsRoute from './pages/Authors';
+import Books from './pages/Books';
 import Login from './components/Login';
 import { Switch, Route } from "react-router-dom";
 import PrivateRoute from './components/PrivateRoute';
 import Header from './components/Header';
-import Books from './components/Books';
 import CreateBook from './components/Books/Create';
 import EditBook from './components/Books/Edit';
 import Context from './context';

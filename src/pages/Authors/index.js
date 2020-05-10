@@ -1,10 +1,10 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import Authors from './All'
-import AuthorDetail from './Detail'
-import PrivateRoute from '../PrivateRoute'
-import CreateAuthor from './Create'
-import EditAuthor from './Edit'
+import Authors from '../../components/Authors/All'
+import AuthorDetail from '../../components/Authors/Detail'
+import PrivateRoute from '../../components/PrivateRoute'
+import CreateAuthor from '../../components/Authors/Create'
+import EditAuthor from '../../components/Authors/Edit'
 
 const AuthorsRoute = () => (
   <Switch>

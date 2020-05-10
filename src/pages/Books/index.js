@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_BOOKS, DELETE_BOOK } from '../../queries/books';
-import Book from './Book';
+import Book from '../../components/Books/Book';
 import { Link } from "react-router-dom";
 import { Grid, Button, Icon } from 'semantic-ui-react';
 import { FlexWrap } from '../../globalStyles';
+import useIntersection from '../../hooks/useIntersection';
 
 const Books = () => {
 
+    const { isIntersecting, ref } = useIntersection({once: false});
     const { loading, error, data, fetchMore } = useQuery(GET_BOOKS, {
         variables: {
             offset: 0,
@@ -15,6 +17,21 @@ const Books = () => {
         },
         fetchPolicy: "cache-and-network"
     });
+
+    useEffect(() => {
+        if(!loading && isIntersecting) {
+            fetchMore({
+                variables: { offset: data.books.length },
+                updateQuery: (prev, { fetchMoreResult }) => {
+                    if (!fetchMoreResult) return prev;
+                    return Object.assign({}, prev, {
+                        books: [...prev.books, ...fetchMoreResult.books]
+                    });
+                }
+            })
+        }
+    },[isIntersecting]);
+
     const [deleteBook] = useMutation(DELETE_BOOK,
         {
             update(cache, { data: { deleteBook } }) {
@@ -46,23 +63,9 @@ const Books = () => {
                     <Book deleteBook={openModalDeleteBook} book={b} key={b.id} />
                 )) : ''}
             </FlexWrap>
-            {loading ? <div> Loading... </div> : ''}
-            <Grid.Column width={16}>
-                <Button
-                    size={'small'}
-                    onClick={() =>
-                        fetchMore({
-                            variables: { offset: data.books.length },
-                            updateQuery: (prev, { fetchMoreResult }) => {
-                                if (!fetchMoreResult) return prev;
-                                return Object.assign({}, prev, {
-                                    books: [...prev.books, ...fetchMoreResult.books]
-                                });
-                            }
-                        })
-                    }
-                > Load More </Button>
-            </Grid.Column>
+            {loading ? <div style={{minHeight: '20vh'}}> Loading... </div> : ''}
+
+            <div ref={ref}></div>
         </Grid>
     );
 }
